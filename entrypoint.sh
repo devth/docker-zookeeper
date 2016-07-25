@@ -9,5 +9,9 @@ if [ -n "$SERVERS" ]; then
 	done
 fi
 
+if [ -n "$ZOO_CFG" ]; then
+	echo $ZOO_CFG >> /zookeeper/conf/zoo.cfg
+fi
+
 cd /zookeeper
 exec "$@"
