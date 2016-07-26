@@ -9,8 +9,10 @@ if [ -n "$SERVERS" ]; then
 	done
 fi
 
+conf_path=/opt/zookeeper/conf/zoo.cfg
+
 if [ -n "$ZOO_CFG" ]; then
-	echo $ZOO_CFG >> /zookeeper/conf/zoo.cfg
+	echo $ZOO_CFG >> $conf_path
 fi
 
 #
@@ -18,19 +20,19 @@ fi
 #
 
 if [ -n "$SSL_KEYSTORE_LOCATION" ]; then
-	echo "ssl.keyStore.location=$SSL_KEYSTORE_LOCATION" >> /zookeeper/conf/zoo.cfg
+	echo "ssl.keyStore.location=$SSL_KEYSTORE_LOCATION" >> $conf_path
 fi
 
 if [ -n "$SSL_KEYSTORE_PASSWORD" ]; then
-	echo "ssl.keyStore.password=$SSL_KEYSTORE_PASSWORD" >> /zookeeper/conf/zoo.cfg
+	echo "ssl.keyStore.password=$SSL_KEYSTORE_PASSWORD" >> $conf_path
 fi
 
 if [ -n "$SSL_TRUSTSTORE_LOCATION" ]; then
-	echo "ssl.trustStore.location=$SSL_TRUSTSTORE_LOCATION" >> /zookeeper/conf/zoo.cfg
+	echo "ssl.trustStore.location=$SSL_TRUSTSTORE_LOCATION" >> $conf_path
 fi
 
 if [ -n "$SSL_TRUSTSTORE_PASSWORD" ]; then
-	echo "ssl.trustStore.password=$SSL_TRUSTSTORE_PASSWORD" >> /zookeeper/conf/zoo.cfg
+	echo "ssl.trustStore.password=$SSL_TRUSTSTORE_PASSWORD" >> $conf_path
 fi
 
 #
@@ -38,8 +40,7 @@ fi
 #
 
 if [ -n "$ZOO_CFG" ]; then
-	echo >> /zookeeper/conf/zoo.cfg
-	echo $ZOO_CFG >> /zookeeper/conf/zoo.cfg
+	echo $ZOO_CFG >> $conf_path
 fi
 
 cd /zookeeper

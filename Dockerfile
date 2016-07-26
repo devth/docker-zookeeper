@@ -1,30 +1,26 @@
 FROM java:openjdk-8-jre-alpine
 
-ENV ZK_VERSION 3.4.7
+MAINTAINER Trevor Hartman <trevorhartman@gmail.com>
 
-RUN mkdir -p /zookeeper/data /zookeeper/wal /zookeeper/log && \
-    cd /tmp && \
-    apk --update add ca-certificates curl jq gnupg tar patch bash && \
-    eval $(gpg-agent --daemon) && \
-    MIRROR=`curl -sS https://www.apache.org/dyn/closer.cgi\?as_json\=1 | jq -r '.preferred'` && \
-    curl -sSLO "${MIRROR}/zookeeper/stable/zookeeper-${ZK_VERSION}.tar.gz" && \
-    curl -sSLO http://www.apache.org/dist/zookeeper/zookeeper-${ZK_VERSION}/zookeeper-${ZK_VERSION}.tar.gz.asc && \
-    curl -sSL  https://dist.apache.org/repos/dist/release/zookeeper/KEYS | gpg -v --import - && \
-    gpg -v --verify zookeeper-${ZK_VERSION}.tar.gz.asc && \
-    tar -zx -C /zookeeper --strip-components=1 --no-same-owner -f zookeeper-${ZK_VERSION}.tar.gz && \
-    apk del curl jq gnupg tar patch && \
-    rm -rf \
+ARG MIRROR=http://apache.mirrors.pair.com
+
+ARG VERSION=3.5.2-alpha
+
+LABEL name="zookeeper" version=$VERSION
+
+RUN apk add --no-cache wget bash tar \
+    && mkdir -p /zookeeper/data /zookeeper/wal /zookeeper/log \
+    && wget -q -O - $MIRROR/zookeeper/zookeeper-$VERSION/zookeeper-$VERSION.tar.gz | \
+         tar -xzf - --strip-components=1 -C /zookeeper \
+    && apk del wget tar \
+    && rm -rf \
       /tmp/* \
-      /root/.gnupg \
       /var/cache/apk/* \
       /zookeeper/contrib/fatjar \
       /zookeeper/dist-maven \
       /zookeeper/docs \
       /zookeeper/src \
       /zookeeper/bin/*.cmd
-
-    #useradd --system -d /zookeeper --user-group zookeeper && \
-    #chmod a+rwx /zookeeper/data /zookeeper/wal /zookeeper/log
 
 ADD  conf /zookeeper/conf/
 COPY bin/zkReady.sh /zookeeper/bin/
@@ -41,4 +37,4 @@ ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "zkServer.sh", "start-foreground" ]
 
-EXPOSE 2181 2888 3888 9010
+EXPOSE 2181 2281 2888 3888 9010
