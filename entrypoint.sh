@@ -1,15 +1,16 @@
 #!/bin/bash
 
+conf_path=/opt/zookeeper/conf/zoo.cfg
+
 echo ${MYID:-1} > /zookeeper/data/myid
 
 if [ -n "$SERVERS" ]; then
 	IFS=\, read -a servers <<<"$SERVERS"
 	for i in "${!servers[@]}"; do 
-		printf "\nserver.%i=%s:2888:3888" "$((1 + $i))" "${servers[$i]}" >> /zookeeper/conf/zoo.cfg
+		printf "\nserver.%i=%s:2888:3888" "$((1 + $i))" "${servers[$i]}" >> $conf_path
 	done
 fi
 
-conf_path=/opt/zookeeper/conf/zoo.cfg
 
 if [ -n "$ZOO_CFG" ]; then
 	echo $ZOO_CFG >> $conf_path
