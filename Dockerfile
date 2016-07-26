@@ -1,4 +1,4 @@
-FROM develar/java
+FROM java:openjdk-8-jre-alpine
 
 ENV ZK_VERSION 3.4.7
 
