@@ -9,6 +9,7 @@ if [ -n "$SERVERS" ]; then
 	for i in "${!servers[@]}"; do 
 		printf "\nserver.%i=%s:2888:3888" "$((1 + $i))" "${servers[$i]}" >> $conf_path
 	done
+	echo "" >> $conf_path
 fi
 
 #
