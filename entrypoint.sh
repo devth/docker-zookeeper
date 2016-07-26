@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conf_path=/opt/zookeeper/conf/zoo.cfg
+conf_path=/zookeeper/conf/zoo.cfg
 
 echo ${MYID:-1} > /zookeeper/data/myid
 
