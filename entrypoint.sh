@@ -11,11 +11,6 @@ if [ -n "$SERVERS" ]; then
 	done
 fi
 
-
-if [ -n "$ZOO_CFG" ]; then
-	echo $ZOO_CFG >> $conf_path
-fi
-
 #
 # Optional SSL configuration
 #
