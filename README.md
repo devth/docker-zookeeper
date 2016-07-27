@@ -1,4 +1,4 @@
-[![](https://badge.imagelayers.io/devth/zookeeper:latest.svg)](https://imagelayers.io/?images=devth/zookeeper:latest 'devth/zookeeper:latest')
+[![](https://badge.imagelayers.io/devth/docker-zookeeper:latest.svg)](https://imagelayers.io/?images=devth/docker-zookeeper:latest 'devth/docker-zookeeper:latest')
 
 ZooKeeper image based on eliaslevy/docker-zookeeper which is based on the
 mesoscloud/zookeeper image.
