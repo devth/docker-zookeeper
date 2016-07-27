@@ -101,7 +101,7 @@ spec:
             medium: Memory
       containers:
         - name: server
-          image: devth/zookeeper:latest
+          image: devth/docker-zookeeper:latest
           env:
             - name: MYID
               value: "1"
@@ -139,7 +139,7 @@ spec:
             medium: Memory
       containers:
         - name: server
-          image: devth/zookeeper:latest
+          image: devth/docker-zookeeper:latest
           env:
             - name: MYID
               value: "2"
@@ -177,7 +177,7 @@ spec:
             medium: Memory
       containers:
         - name: server
-          image: devth/zookeeper:latest
+          image: devth/docker-zookeeper:latest
           env:
             - name: MYID
               value: "3"
