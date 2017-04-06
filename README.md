@@ -1,5 +1,7 @@
 # docker-zookeeper
 
+[![Docker Automated build](https://img.shields.io/docker/automated/devth/docker-zookeeper.svg?style=flat-square)](https://hub.docker.com/r/devth/docker-zookeeper/)
+
 ZooKeeper image based on eliaslevy/docker-zookeeper which is based on the
 mesoscloud/zookeeper image.
 
