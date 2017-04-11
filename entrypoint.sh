@@ -24,21 +24,26 @@ else
 fi
 
 # toss the computed `myid` in config:
+echo "myid: $myid"
 echo "$myid" > /zookeeper/data/myid
 
 
 if [ -n "$SERVERS" ]; then
+  echo "Adding $SERVERS to $conf_path"
   IFS=\, read -r -a servers <<<"$SERVERS"
   for i in "${!servers[@]}"; do 
-    printf "\nserver.%i=%s:2888:3888" "$((1 + $i))" "${servers[$i]}" >> $conf_path
+    printf "\nserver.%i=%s:2888:3888" "$((1 + i))" "${servers[$i]}" >> $conf_path
   done
   echo "" >> $conf_path
+else
+  echo "Warning: servers is not defined: $SERVERS"
 fi
 
 #
 # Optional SSL configuration
 #
 
+echo "Checking for SSL config"
 if [ -n "$SSL_KEYSTORE_LOCATION" ]; then
   echo "ssl.keyStore.location=$SSL_KEYSTORE_LOCATION" >> $conf_path
 fi
@@ -59,9 +64,12 @@ fi
 # Other optional configuration from ZOO_CFG env var
 #
 
+echo "Checking for other config in $ZOO_CFG"
 if [ -n "$ZOO_CFG" ]; then
-  echo $ZOO_CFG >> $conf_path
+  echo "$ZOO_CFG" >> $conf_path
 fi
 
+
 cd /zookeeper
+echo "Starting: $*"
 exec "$@"
