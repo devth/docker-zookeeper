@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 conf_path=/zookeeper/conf/zoo.cfg
 
 echo "Configuring myid"
