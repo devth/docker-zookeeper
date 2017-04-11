@@ -2,11 +2,12 @@
 
 conf_path=/zookeeper/conf/zoo.cfg
 
-
+echo "Configuring myid"
 # Parse MYID or use a default value of 1
 myid=1
 # If MYID_PARSE is defined, parse MYID out of it
 if [[ $MYID_PARSE =~ (.*)-([0-9]+)$ ]]; then
+  echo "Parsing myid from $MYID_PARSE"
   # NAME=${BASH_REMATCH[1]}
   ORD=${BASH_REMATCH[2]}
   # StatefulSet ordinals are 0-based but myid is 1-based
