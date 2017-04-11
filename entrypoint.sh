@@ -71,5 +71,6 @@ fi
 
 
 cd /zookeeper
-echo "Starting: $*"
+echo "Starting: $* with $conf_path:"
+cat $conf_path
 exec "$@"
