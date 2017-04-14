@@ -2,7 +2,12 @@
 
 set -euo pipefail
 
+ZK_SERVER_PORT=${ZK_SERVER_PORT:-2888}
+ZK_ELECTION_PORT=${ZK_ELECTION_PORT:-3888}
+
 conf_path=/zookeeper/conf/zoo.cfg
+
+domain=$(hostname -d)
 
 echo "Configuring myid"
 # Parse MYID or use a default value of 1
@@ -28,16 +33,15 @@ echo "myid: $myid"
 echo "$myid" > /zookeeper/data/myid
 
 
-if [ -n "$SERVERS" ]; then
-  echo "Adding $SERVERS to $conf_path"
-  IFS=\, read -r -a servers <<<"$SERVERS"
-  for i in "${!servers[@]}"; do 
-    printf "\nserver.%i=%s:2888:3888" "$((1 + i))" "${servers[$i]}" >> $conf_path
+print_servers() {
+  for (( i=1; i<=ZK_REPLICAS; i++ ))
+  do
+    echo "server.$i=$NAME-$((i-1)).$domain:$ZK_SERVER_PORT:$ZK_ELECTION_PORT"
   done
-  echo "" >> $conf_path
-else
-  echo "Warning: servers is not defined: $SERVERS"
-fi
+}
+
+echo "Adding $(print_servers) to $conf_path"
+print_servers >> $conf_path
 
 #
 # Optional SSL configuration
