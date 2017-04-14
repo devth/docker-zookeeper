@@ -41,6 +41,7 @@ print_servers() {
 }
 
 echo "Adding $(print_servers) to $conf_path"
+echo >> $conf_path
 print_servers >> $conf_path
 
 #
