@@ -22,6 +22,10 @@ RUN apk add --no-cache wget bash tar \
       /zookeeper/src \
       /zookeeper/bin/*.cmd
 
+# Disable DNS cache
+RUN echo "networkaddress.cache.ttl=0" >> \
+  /usr/lib/jvm/default-jvm/jre/lib/security/java.security
+
 ADD  conf /zookeeper/conf/
 COPY bin/zkReady.sh /zookeeper/bin/
 COPY entrypoint.sh /
