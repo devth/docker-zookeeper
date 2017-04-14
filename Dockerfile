@@ -28,6 +28,7 @@ RUN echo "networkaddress.cache.ttl=0" >> \
 
 ADD  conf /zookeeper/conf/
 COPY bin/zkReady.sh /zookeeper/bin/
+COPY bin/zkOk.sh /zookeeper/bin/
 COPY entrypoint.sh /
 
 ENV PATH=/zookeeper/bin:${PATH} \
