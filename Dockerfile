@@ -8,7 +8,7 @@ ARG VERSION=3.5.2-alpha
 
 LABEL name="zookeeper" version=$VERSION
 
-RUN apk add --no-cache wget bash tar \
+RUN apk add --no-cache curl wget bash tar \
     && mkdir -p /zookeeper/data /zookeeper/wal /zookeeper/log \
     && wget -q -O - $MIRROR/zookeeper/zookeeper-$VERSION/zookeeper-$VERSION.tar.gz | \
          tar -xzf - --strip-components=1 -C /zookeeper \
