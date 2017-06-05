@@ -4,6 +4,7 @@ set -euo pipefail
 
 ZK_SERVER_PORT=${ZK_SERVER_PORT:-2888}
 ZK_ELECTION_PORT=${ZK_ELECTION_PORT:-3888}
+ZK_CLIENT_PORT=${ZK_CLIENT_PORT:-2181}
 
 conf_path=/zookeeper/conf/zoo.cfg
 
@@ -45,7 +46,7 @@ if [ -n "$SERVERS" ]; then
   echo "Adding $SERVERS to $conf_path"
   IFS=\, read -r -a servers <<<"$SERVERS"
   for i in "${!servers[@]}"; do
-    printf "\nserver.%i=%s:${ZK_SERVER_PORT}:${ZK_ELECTION_PORT}" "$((1 + i))" "${servers[$i]}" >> $conf_path
+    printf "\nserver.%i=%s:${ZK_SERVER_PORT}:${ZK_ELECTION_PORT};${ZK_CLIENT_PORT}" "$((1 + i))" "${servers[$i]}" >> $conf_path
   done
   echo "" >> $conf_path
 else
