@@ -40,9 +40,22 @@ print_servers() {
   done
 }
 
-echo "Adding $(print_servers) to $conf_path"
-echo >> $conf_path
-print_servers >> $conf_path
+# SERVERS should be a comma-delimited string of addresses
+if [ -n "$SERVERS" ]; then
+  echo "Adding $SERVERS to $conf_path"
+  IFS=\, read -r -a servers <<<"$SERVERS"
+  for i in "${!servers[@]}"; do
+    printf "\nserver.%i=%s:${ZK_SERVER_PORT}:${ZK_ELECTION_PORT}" "$((1 + i))" "${servers[$i]}" >> $conf_path
+  done
+  echo "" >> $conf_path
+else
+  # if SERVERS isn't set try to infer them
+  echo "Adding $(print_servers) to $conf_path"
+  echo >> $conf_path
+  print_servers >> $conf_path
+fi
+
+
 
 #
 # Optional SSL configuration
