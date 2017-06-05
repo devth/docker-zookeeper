@@ -4,7 +4,8 @@ MAINTAINER Trevor Hartman <trevorhartman@gmail.com>
 
 ARG MIRROR=http://apache.mirrors.pair.com
 
-ARG VERSION=3.5.2-alpha
+# does not support SSL
+ARG VERSION=3.4.9
 
 LABEL name="zookeeper" version=$VERSION
 
